@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "xQ3cyGXXaSBE0LBrc+PCxufNJSJLDGcQ20h/QzKxgHA=",
-  "Source": "BankingApp",
-  "BasePath": "_content/BankingApp",
+  "Hash": "kkQ7V1ccwcqf9LGENQT1dceZAN5Al09blsGhqG72nBY=",
+  "Source": "BankingApp.api",
+  "BasePath": "_content/BankingApp.api",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],

@@ -1,1 +1,7 @@
-GET http://localhost:5273
+POST http://localhost:5273/createUser
+Content-Type: application/json
+
+{
+    "Username": "testUser1",
+    "Password": "password1"
+}
