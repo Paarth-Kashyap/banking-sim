@@ -1,0 +1,38 @@
+# Frontend-specific files
+/frontend/node_modules/
+frontend/build/
+frontend/.env
+frontend/.pnp
+frontend/pnp.js
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Backend-specific files (for .NET)
+/BankingAppAPI/bin/
+BankingAppAPI/obj/
+BankingAppAPI/*.db
+BankingAppAPI/*.dll
+BankingAppAPI/*.exe
+BankingAppAPI/appsettings.Development.json
+BankingAppAPI/appsettings.json
+BankingAppAPI/*.user
+
+# General files
+.DS_Store
+Thumbs.db
+.env
+*.log
+
+# IDE and User-specific files
+.vscode/
+.vs/
+*.suo
+*.user
+*.rsuser
+*.userosscache
+*.sln.docstates
+
+# Docker
+docker-compose.override.yml
+*.dockerignore
