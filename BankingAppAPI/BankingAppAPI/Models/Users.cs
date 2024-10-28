@@ -12,11 +12,13 @@ namespace BankingAppAPI.Models // Change "YourNamespace" to your actual project 
         [EmailAddress] // Validates as a valid email format
         public required string Email { get; set; }
 
-        public required string PasswordHash { get; set; }
+        public required string Password { get; set; }
 
         //accounts of users
         public List<Account> Accounts { get; set; } = new List<Account>();
 
+        public required string FirstName { get; set; }
+        public required string LastName { get; set; }
 
         
     }

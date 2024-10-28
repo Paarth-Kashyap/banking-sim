@@ -17,6 +17,13 @@ namespace BankingAppAPI.Data
         // Fluent API configuration for entity relationships and constraints
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            //create users and transaction tables
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Transaction>().ToTable("Transactions");
+            
+
+
             // Example: Unique constraint on AccountNumber
             modelBuilder.Entity<Account>()
                 .HasIndex(a => a.AccountNumber)

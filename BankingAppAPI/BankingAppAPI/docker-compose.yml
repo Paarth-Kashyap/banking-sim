@@ -1,4 +1,4 @@
-version: '3.8'
+#version: '3.8'
 
 services:
   bankingappapi:
@@ -10,16 +10,16 @@ services:
       - "8081:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Host=database;Database=mydb;Username=myuser;Password=mypassword
+      - ConnectionStrings__DefaultConnection=Host=database;Database=bankingAppDB;Username=BankingAppAPI;Password=Banking123
     depends_on:
       - database
 
   database:
     image: postgres:latest
     environment:
-      - POSTGRES_DB=mydb
-      - POSTGRES_USER=myuser
-      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_DB=bankingAppDB
+      - POSTGRES_USER=BankingAppAPI
+      - POSTGRES_PASSWORD=Banking123
     ports:
       - "5432:5432"
     volumes:
