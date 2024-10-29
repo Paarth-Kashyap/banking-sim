@@ -5,6 +5,13 @@ using System.Collections.Generic;
 using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
 
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+
 namespace BankingAppAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -12,18 +19,12 @@ namespace BankingAppAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly BankingDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public UserController(BankingDbContext context)
+        public UserController(BankingDbContext context, IConfiguration configuration)
         {
             _context = context;
-        }
-
-        // GET ALL USERS
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        {
-            var users = await _context.Users.ToListAsync();
-            return Ok(users); // Return 200 OK with the list of users
+            _configuration = configuration;
         }
 
         // GET USER BY ID
@@ -52,6 +53,7 @@ namespace BankingAppAPI.Controllers
         }
 
         // UPDATE USER
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, User user)
         {
@@ -94,6 +96,7 @@ namespace BankingAppAPI.Controllers
 
 
         // DELETE USER
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -133,7 +136,8 @@ namespace BankingAppAPI.Controllers
                 return Unauthorized(); // Return 401 Unauthorized if password is incorrect
             }
 
-            return Ok(user); // Return 200 OK with the user details
+            var token = GenerateJwtToken(user);
+            return Ok(new {Token = token, User = user}); // Return 200 OK with the user details
         }
 
 
@@ -173,6 +177,35 @@ namespace BankingAppAPI.Controllers
         {
             return _context.Users.Any(e => e.Id == id);
         }
+
+        //tokens for logging in and out 
+        private string GenerateJwtToken(User user)
+        {
+            // Fetch the key from configuration
+            var key = _configuration["Jwt:Key"];
+            if (string.IsNullOrEmpty(key))
+            {
+                throw new InvalidOperationException("JWT Key is missing in configuration");
+            }
+
+            // Generate the token
+            var keyBytes = Encoding.UTF8.GetBytes(key);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.Name, user.Email),
+                    new Claim("UserId", user.Id.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+
 
 
     }

@@ -20,7 +20,9 @@ namespace BankingAppAPI.Models // Change "YourNamespace" to your actual project 
         public List<Account> Accounts { get; set; } = new List<Account>();
 
         //have blank string as default--> nullable
+        [StringLength(50, MinimumLength = 2)]
         public string? FirstName { get; set;} = string.Empty; 
+        [StringLength(50, MinimumLength = 2)]
         public string? LastName { get; set; } = string.Empty;
         
     }

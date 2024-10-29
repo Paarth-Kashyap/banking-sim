@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/App.css';
-import { Link } from 'react-router-dom'; // Import Link for navigation
+import { Link, useNavigate } from 'react-router-dom'; // Import Link for navigation
 import { signup } from '../api/authService';
 
 function Signup() {
@@ -12,6 +12,7 @@ function Signup() {
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
     const [error, setError] = React.useState(''); // For error handling
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
@@ -27,13 +28,25 @@ function Signup() {
             if (response.title === "Conflict") {
                 setError("User already exists with that email, please login!");
             } else {
-                // Redirect to login page or dashboard
-                // Save token to localStorage or context
+                              
                 localStorage.setItem("authToken", response.token);
+                localStorage.setItem("email", response.email); 
+                localStorage.setItem("firstName", response.firstName);
+                localStorage.setItem("lastName", response.LastName);
+
                 setError(''); // Clear error message
+                //protected area checking log in or not
+                const token = localStorage.getItem('authToken');
+                //console.log(token);
+    
+                if (!token) {
+                    navigate('/Login');
+                }
+                navigate('/HomePage');
             }
         } catch (error) {
             setError("A signup error has occurred");
+            console.log(error);
         }
     }
 

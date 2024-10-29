@@ -3,7 +3,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css'; // Ensure icons are imported
 import '../assets/App.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../api/authService';
 
 function Login() {
@@ -11,6 +11,7 @@ function Login() {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [error, setError] = React.useState('');
+    const navigate = useNavigate();
 
 
     //submit login form
@@ -20,22 +21,24 @@ function Login() {
         try{
             const response = await login(email, password);
             if (response.token) {
+                
                 // Save token to localStorage or context
                 localStorage.setItem("authToken", response.token);
+                localStorage.setItem("name", response.user.firstName); // Adjust based on your response structure
+                localStorage.setItem("email", response.user.email); // Adjust based on your response structure
                 // Redirect to dashboard or another protected page
-            } else if (response.title == "Not Found") {
+                setError(''); // Clear error message
+                navigate('/Homepage');
+
+            } else if (response.title === "Not Found") {
                 setError("No user exists with that email, please sign up!");
             
-            } else if (response.title == "Unauthorized") {
+            } else if (response.title === "Unauthorized") {
                 setError("Incorrect password, please try again!");
             }
         }catch (error){
             setError("A login error has occured");
         }
-
-
-
-
 
     }
 
@@ -96,7 +99,7 @@ function Login() {
                                 {error && <p className='text-danger mt-3'>{error}</p>}
                                 {/* Sign up section */}
                                 <p className='mt-3'>
-                                    Don't have an account? <Link to='/signup' className='text-decoration-none'>Sign Up</Link>
+                                    Don't have an account? <Link to='/Signup' className='text-decoration-none'>Sign Up</Link>
                                 </p>
                             </form>
                         </div>

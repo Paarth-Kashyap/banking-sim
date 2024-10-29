@@ -3,15 +3,19 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import React from 'react';
 import { BrowserRouter as Router ,Route, Routes } from 'react-router-dom';
-import Login from './pages/LoginPage'; // Adjust the path as necessary
-import Signup from './pages/SignupPage'; // Adjust the path as necessary
+import { Navigate } from 'react-router-dom';
+import Login from './pages/LoginPage'; 
+import Signup from './pages/SignupPage'; 
+import HomePage from './pages/HomePage'; 
 
 function App() {
     return (
 
       <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/signup" element={<Signup />} /> {/* Un-commented this line */}
+          <Route path="/Login" element={<Login />} />
+          <Route path="/" element={<Navigate replace to="/Login" />}  />
+          <Route path="/SignUp" element={<Signup />} /> 
+          <Route path="/HomePage" element={<HomePage />} />
       </Routes>
 
     );

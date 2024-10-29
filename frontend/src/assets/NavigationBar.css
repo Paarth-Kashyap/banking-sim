@@ -1,0 +1,9 @@
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav-link span {
+    margin-top: 4px; /* Optional: adjust margin between icon and text */
+}
