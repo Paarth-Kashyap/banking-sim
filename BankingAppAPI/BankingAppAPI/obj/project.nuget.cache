@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "NBaG8azUpMc=",
+  "dgSpecHash": "38RA3GvtTIo=",
   "success": true,
   "projectFilePath": "C:\\Users\\Paarth K\\Documents\\BankApp_project\\BankingAppAPI\\BankingAppAPI\\BankingAppAPI.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Paarth K\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Paarth K\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Paarth K\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.10\\microsoft.aspnetcore.authentication.jwtbearer.8.0.10.nupkg.sha512",
     "C:\\Users\\Paarth K\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",

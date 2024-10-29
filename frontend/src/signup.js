@@ -1,26 +1,40 @@
-// signup.js
-
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { Link } from 'react-router-dom'; // Import Link for navigation
+import { signup } from './api/authService';
 
 function Signup() {
     // State variables for the signup page
+    const [firstName, setFirstName] = React.useState(''); // New state for first name
+    const [lastName, setLastName] = React.useState(''); // New state for last name
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
     const [error, setError] = React.useState(''); // For error handling
 
-    function handleSubmit(e) {
-        e.preventDefault(); // Prevent default form submission to validate the data
-        if (password !== confirmPassword) {
-            setError('Passwords do not match'); // Set error message
-            return;
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Prevent default form submission
+        
+        try {
+            if (password !== confirmPassword) {
+                setError('Passwords do not match'); // Set error message
+                return;
+            }
+
+            const response = await signup({ firstName, lastName, email, password });
+
+            if (response.title === "Conflict") {
+                setError("User already exists with that email, please login!");
+            } else {
+                // Redirect to login page or dashboard
+                // Save token to localStorage or context
+                localStorage.setItem("authToken", response.token);
+                setError(''); // Clear error message
+            }
+        } catch (error) {
+            setError("A signup error has occurred");
         }
-        console.log(email);
-        console.log(password);
-        // Proceed with signup logic (e.g., API call)
     }
 
     // The HTML and CSS for the signup page
@@ -38,7 +52,43 @@ function Signup() {
                         </h1>
                         {/* Form Container */}
                         <div className='p-5 bg-white mt-5'>
-                            <form onSubmit={handleSubmit}> {/* Calls the handle submit function when submitted */}
+                            <form onSubmit={handleSubmit}>
+                                {/* First Name input */}
+                                <div className='mb-3'>
+                                    <div className="input-group">
+                                        <span className="input-group-text bg-darkgrey">
+                                            <i className="bi bi-person icon-color"></i>
+                                        </span>
+                                        <input
+                                            type="text"
+                                            id="firstName"
+                                            name="firstName"
+                                            required
+                                            placeholder='Enter First Name'
+                                            className='form-control'
+                                            style={{ fontSize: '1.25rem' }}
+                                            onChange={(e) => setFirstName(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                                {/* Last Name input */}
+                                <div className='mb-3'>
+                                    <div className="input-group">
+                                        <span className="input-group-text bg-darkgrey">
+                                            <i className="bi bi-person-fill icon-color"></i>
+                                        </span>
+                                        <input
+                                            type="text"
+                                            id="lastName"
+                                            name="lastName"
+                                            required
+                                            placeholder='Enter Last Name'
+                                            className='form-control'
+                                            style={{ fontSize: '1.25rem' }}
+                                            onChange={(e) => setLastName(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
                                 {/* Email input */}
                                 <div className='mb-3'>
                                     <div className="input-group">
@@ -61,7 +111,7 @@ function Signup() {
                                 <div className='mb-3'>
                                     <div className="input-group">
                                         <span className="input-group-text bg-darkgrey">
-                                            <i className="bi bi-lock icon-color"></i> {/* Bootstrap Icon for Password */}
+                                            <i className="bi bi-lock icon-color"></i>
                                         </span>
                                         <input
                                             type="password"
@@ -79,7 +129,7 @@ function Signup() {
                                 <div className='mb-3'>
                                     <div className="input-group">
                                         <span className="input-group-text bg-darkgrey">
-                                            <i className="bi bi-lock-fill icon-color"></i> {/* Bootstrap Icon for Confirm Password */}
+                                            <i className="bi bi-lock-fill icon-color"></i>
                                         </span>
                                         <input
                                             type="password"
@@ -94,12 +144,12 @@ function Signup() {
                                     </div>
                                 </div>
                                 {/* Error Message */}
-                                {error && <p className="text-danger">{error}</p>} {/* Display error message */}
+                                {error && <p className="text-danger">{error}</p>}
                                 {/* Signup button */}
                                 <button type="submit" className='btn btn-success w-100' style={{ fontSize: '1.25rem' }}>Sign Up</button>
                                 {/* Login section */}
                                 <p className='mt-3'>
-                                    Already have an account? <Link to='/' className='text-decoration-none'>Login</Link> {/* Use Link for navigation */}
+                                    Already have an account? <Link to='/' className='text-decoration-none'>Login</Link>
                                 </p>
                             </form>
                         </div>

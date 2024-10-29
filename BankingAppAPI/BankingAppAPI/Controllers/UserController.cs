@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using BankingAppAPI.Data;
 using BankingAppAPI.Models;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankingAppAPI.Controllers
@@ -109,10 +109,71 @@ namespace BankingAppAPI.Controllers
             return NoContent(); // Return 204 No Content on successful deletion
         }
 
+       [HttpPost("login")]
+        public async Task<ActionResult<User>> LoginUser([FromBody] LoginRequest loginRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState); // Return 400 Bad Request if the model state is invalid
+            }
+
+            // Find user by email
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == loginRequest.Email);
+
+            // If user is not found, return 404 Not Found
+            if (user == null)
+            {
+                return NotFound(); // User not found
+            }
+
+            // Verify password (assuming you have hashed the password)
+            if (!BCrypt.Net.BCrypt.Verify(loginRequest.Password, user.Password))
+            {
+                return Unauthorized(); // Return 401 Unauthorized if password is incorrect
+            }
+
+            return Ok(user); // Return 200 OK with the user details
+        }
+
+
+        [HttpPost("signup")]
+        public async Task<ActionResult<User>> Signup([FromBody] User userData)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState); // Return 400 Bad Request if the model state is invalid
+            }
+
+            // Check if the email is already in use
+            if (await _context.Users.AnyAsync(u => u.Email == userData.Email))
+            {
+                return Conflict(); // Return 409 Conflict if email is already in use
+            }
+
+            // Hash the password before saving to the database
+            userData.Password = BCrypt.Net.BCrypt.HashPassword(userData.Password);
+
+            //set the name
+            userData.FirstName = userData.FirstName;
+            userData.LastName = userData.LastName;
+
+            _context.Users.Add(userData);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetUser), new { id = userData.Id }, userData);
+        }
+        
+        
+        
+        
+        
         // Helper method to check if a user exists
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.Id == id);
         }
+
+
     }
 }

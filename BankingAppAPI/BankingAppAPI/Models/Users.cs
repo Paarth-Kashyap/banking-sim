@@ -9,17 +9,19 @@ namespace BankingAppAPI.Models // Change "YourNamespace" to your actual project 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Auto-generates the key upon insert
         public int Id { get; set; }
 
+        [Required]
         [EmailAddress] // Validates as a valid email format
         public required string Email { get; set; }
 
+        [Required]
         public required string Password { get; set; }
 
         //accounts of users
         public List<Account> Accounts { get; set; } = new List<Account>();
 
-        public required string FirstName { get; set; }
-        public required string LastName { get; set; }
-
+        //have blank string as default--> nullable
+        public string? FirstName { get; set;} = string.Empty; 
+        public string? LastName { get; set; } = string.Empty;
         
     }
 

@@ -9,6 +9,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<BankingDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Allow CORS for frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") // Change this to match your frontend URL
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 // Add services to the container
 builder.Services.AddControllers();
 
@@ -17,10 +28,11 @@ builder.Services.AddAuthentication(); // Configure your authentication here
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
+// Apply CORS policy
+app.UseCors("AllowFrontend");
 
-// Use Authentication before Authorization
-app.UseAuthentication();
+// Configure the HTTP request pipeline
+app.UseAuthentication(); // Use Authentication before Authorization
 app.UseAuthorization();
 
 app.MapControllers();

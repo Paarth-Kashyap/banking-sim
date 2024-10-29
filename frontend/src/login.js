@@ -4,17 +4,39 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css'; // Ensure icons are imported
 import './App.css';
 import { Link } from 'react-router-dom';
+import { login } from './api/authService';
 
 function Login() {
     // State variables for the login page
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [error, setError] = React.useState('');
 
-    function handleSubmit(e) {
+
+    //submit login form
+    const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
-        console.log(email);
-        console.log(password);
-        // Add your authentication logic here
+        
+        try{
+            const response = await login(email, password);
+            if (response.token) {
+                // Save token to localStorage or context
+                localStorage.setItem("authToken", response.token);
+                // Redirect to dashboard or another protected page
+            } else if (response.title == "Not Found") {
+                setError("No user exists with that email, please sign up!");
+            
+            } else if (response.title == "Unauthorized") {
+                setError("Incorrect password, please try again!");
+            }
+        }catch (error){
+            setError("A login error has occured");
+        }
+
+
+
+
+
     }
 
     // The HTML/CSS for the login page
@@ -71,6 +93,7 @@ function Login() {
                                 </div>
                                 {/* Login button */}
                                 <button type="submit" className='btn btn-success w-100' style={{ fontSize: '1.25rem' }}>Login</button>
+                                {error && <p className='text-danger mt-3'>{error}</p>}
                                 {/* Sign up section */}
                                 <p className='mt-3'>
                                     Don't have an account? <Link to='/signup' className='text-decoration-none'>Sign Up</Link>
