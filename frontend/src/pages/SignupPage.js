@@ -1,8 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import '../assets/App.css';
 import { Link } from 'react-router-dom'; // Import Link for navigation
-import { signup } from './api/authService';
+import { signup } from '../api/authService';
 
 function Signup() {
     // State variables for the signup page

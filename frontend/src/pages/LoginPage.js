@@ -2,9 +2,9 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css'; // Ensure icons are imported
-import './App.css';
+import '../assets/App.css';
 import { Link } from 'react-router-dom';
-import { login } from './api/authService';
+import { login } from '../api/authService';
 
 function Login() {
     // State variables for the login page

@@ -1,10 +1,10 @@
-import './App.css';
+import './assets/App.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import React from 'react';
 import { BrowserRouter as Router ,Route, Routes } from 'react-router-dom';
-import Login from './login'; // Adjust the path as necessary
-import Signup from './signup'; // Adjust the path as necessary
+import Login from './pages/LoginPage'; // Adjust the path as necessary
+import Signup from './pages/SignupPage'; // Adjust the path as necessary
 
 function App() {
     return (
