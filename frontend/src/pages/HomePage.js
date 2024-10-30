@@ -23,8 +23,7 @@ function HomePage() {
         <div className="home-page">
             {/* Header with Greeting */}
             <div className="header-banner p-4 mb-4">
-                <h1 className="welcome-title">Hello, {userName}!</h1>
-                <p className="email-text">{userEmail}</p>
+                <h3 className="welcome-title">Hello, {userName}!</h3>
             </div>
 
             {/* Account Balance Section */}

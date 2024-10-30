@@ -1,9 +1,27 @@
 .nav-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    color: #333; /* Default color */
+    transition: color 0.3s ease; /* Smooth transition */
 }
 
-.nav-link span {
-    margin-top: 4px; /* Optional: adjust margin between icon and text */
+.nav-link svg {
+    fill: #333; /* Default icon color */
+    transition: fill 0.3s ease; /* Smooth transition for icon */
+}
+
+.nav-link:hover {
+    color: #d71e29; /* Hover color for text */
+}
+
+.nav-link:hover svg {
+    fill: #d71e29; /* Hover color for icon */
+}
+
+/* Active link styling */
+.nav-link.active {
+    color: #d71e29; /* Active link color */
+    font-weight: bold;
+}
+
+.nav-link.active svg {
+    fill: #d71e29; /* Active icon color */
 }

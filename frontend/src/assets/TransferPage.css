@@ -1,0 +1,99 @@
+/* TransferPage.css */
+.transfer-page-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background-color: #f2f4f7;
+}
+
+.transfer-page {
+    max-width: 100%;
+    width: 50rem;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #f7f8fa;
+    border-radius: 2em;
+    box-shadow: 0 0.25em 0.625em rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.transfer-page h1 {
+    color: #d71e29;
+    font-weight: bold;
+    font-size: 2.5em;
+}
+
+.form-group {
+    margin: 1em 0;
+}
+
+.form-group label {
+    display: block;
+    font-size: 1.5em;
+    color: #555;
+    margin-bottom: 0.5em;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.75em;
+    border-radius: 0.3em;
+    border: 1px solid #ccc;
+    font-size: 1.5em;
+    color: #333;
+    appearance: none; /* Removes default dropdown arrow */
+    background-color: #fff;
+}
+
+.form-group select {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="grey" class="bi bi-caret-down-fill" viewBox="0 0 16 16"><path d="M7.247 11.14a.5.5 0 0 0 .506 0l5-3.5a.5.5 0 0 0-.506-.832L8 10.18 3.753 6.808a.5.5 0 1 0-.506.832l5 3.5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    padding-right: 2rem;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #d71e29;
+    box-shadow: 0 0 0.3em rgba(215, 30, 41, 0.2);
+}
+
+.transfer-button {
+    background-color: #d71e29;
+    color: white;
+    padding: 1em 2em;
+    border: none;
+    border-radius: 0.3em;
+    font-size: 1.3em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1em;
+}
+
+.transfer-button:hover {
+    background-color: #b11b23;
+}
+
+.transfer-button:active {
+    background-color: #a1181f;
+}
+
+/* Media query for responsive adjustments */
+@media (max-width: 600px) {
+    .transfer-page {
+        padding: 1.5rem;
+    }
+
+    .transfer-page h1 {
+        font-size: 1.5em;
+    }
+
+    .transfer-button {
+        padding: 0.7em 1.3em;
+        font-size: 1em;
+    }
+}

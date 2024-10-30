@@ -1,0 +1,26 @@
+/* src/components/TransactionList.css */
+.transaction-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem; /* Use smaller padding for consistent spacing */
+}
+
+.transaction-separator {
+    margin: 0 1rem; /* Adjust space between elements using rem */
+    border-left: 1px solid #ccc; /* Optional: Add a vertical line */
+    height: auto; /* Make height dynamic based on content */
+}
+
+/* Scrollable list */
+.scrollable-list {
+    max-height: 50vh; /* Use viewport height for dynamic height */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+* {
+    box-sizing: border-box; /* Apply box-sizing globally */
+    margin: 0;
+    padding: 0;
+}
+

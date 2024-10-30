@@ -7,6 +7,7 @@ import { Navigate } from 'react-router-dom';
 import Login from './pages/LoginPage'; 
 import Signup from './pages/SignupPage'; 
 import HomePage from './pages/HomePage'; 
+import TransferPage from './pages/TransferPage';
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Navigate replace to="/Login" />}  />
           <Route path="/SignUp" element={<Signup />} /> 
           <Route path="/HomePage" element={<HomePage />} />
+          <Route path= "/Transfer" element={<TransferPage />} />
       </Routes>
 
     );

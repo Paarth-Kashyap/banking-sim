@@ -47,5 +47,34 @@ namespace BankingAppAPI.Controllers
 
             return CreatedAtAction(nameof(GetUserAccounts), new { id = account.Id }, account);
         }
+
+        // GET: api/account/balance/{accountNumber} (get account balance by account number)
+        [HttpGet("balance/{accountNumber}")]
+        public async Task<ActionResult<decimal>> GetAccountBalance(string accountNumber)
+        {
+            var userId = GetLoggedInUserId();
+            var account = await _context.Accounts
+                .FirstOrDefaultAsync(a => a.AccountNumber == accountNumber && a.UserId == userId);
+
+            if (account == null) 
+                return NotFound("Account not found.");
+
+            return Ok(account.Balance); // Return only the account balance
+        }
+
+        // GET: api/account/{accountNumber} (get if account exists in database by account number)
+        [HttpGet("{accountNumber}")]
+        public async Task<ActionResult<bool>> AccountExists(string accountNumber)
+        {
+            
+            bool accountFound = await _context.Accounts
+                .AnyAsync(a => a.AccountNumber == accountNumber);
+
+            if (accountFound) 
+                return Ok();
+            
+            return NotFound();
+        }
+
     }
 }

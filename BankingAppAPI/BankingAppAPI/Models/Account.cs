@@ -13,7 +13,7 @@ namespace BankingAppAPI.Models
         public string AccountNumber { get; set; } = string.Empty;
 
         [Required, Range(0, double.MaxValue)]
-        public double Balance { get; set; }
+        public decimal Balance { get; set; }
 
         [Required]
         public int UserId { get; set; } // Foreign key

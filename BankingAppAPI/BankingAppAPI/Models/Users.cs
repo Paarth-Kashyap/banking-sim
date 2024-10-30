@@ -23,5 +23,6 @@ namespace BankingAppAPI.Models
 
         [StringLength(50, MinimumLength = 2)]
         public string LastName { get; set; } = string.Empty;
+        
     }
 }
