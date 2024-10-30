@@ -1,52 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/App.css';
 import { Link, useNavigate } from 'react-router-dom'; // Import Link for navigation
 import { signup } from '../api/authService';
 
 function Signup() {
-    // State variables for the signup page
-    const [firstName, setFirstName] = React.useState(''); // New state for first name
-    const [lastName, setLastName] = React.useState(''); // New state for last name
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [confirmPassword, setConfirmPassword] = React.useState('');
-    const [error, setError] = React.useState(''); // For error handling
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent default form submission
-        
-        try {
-            if (password !== confirmPassword) {
-                setError('Passwords do not match'); // Set error message
-                return;
-            }
+        e.preventDefault();
 
-            const response = await signup({ firstName, lastName, email, password });
+        if (password !== confirmPassword) {
+            setError('Passwords do not match');
+            return;
+        }
 
-            if (response.title === "Conflict") {
-                setError("User already exists with that email, please login!");
-            } else {
-                              
-                localStorage.setItem("authToken", response.token);
-                localStorage.setItem("email", response.email); 
-                localStorage.setItem("firstName", response.firstName);
-                localStorage.setItem("lastName", response.LastName);
-
-                setError(''); // Clear error message
-                //protected area checking log in or not
-                const token = localStorage.getItem('authToken');
-                //console.log(token);
-    
-                if (!token) {
-                    navigate('/Login');
-                }
-                navigate('/HomePage');
-            }
-        } catch (error) {
-            setError("A signup error has occurred");
-            console.log(error);
+        const response = await signup({ firstName, lastName, email, password });
+        if (response.error) {
+            setError(response.error);
+        } else {
+            localStorage.setItem("authToken", response.token);
+            localStorage.setItem("firstName", response.firstName);
+            localStorage.setItem("lastName", response.lastName);
+            localStorage.setItem("email", response.email);
+            setError('');
+            navigate('/HomePage');
         }
     }
 

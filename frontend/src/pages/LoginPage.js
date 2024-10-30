@@ -1,5 +1,5 @@
 // login.js
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css'; // Ensure icons are imported
 import '../assets/App.css';
@@ -7,40 +7,26 @@ import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../api/authService';
 
 function Login() {
-    // State variables for the login page
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [error, setError] = React.useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
-
-    //submit login form
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent default form submission
+        e.preventDefault();
         
-        try{
-            const response = await login(email, password);
-            if (response.token) {
-                
-                // Save token to localStorage or context
-                localStorage.setItem("authToken", response.token);
-                localStorage.setItem("name", response.user.firstName); // Adjust based on your response structure
-                localStorage.setItem("email", response.user.email); // Adjust based on your response structure
-                // Redirect to dashboard or another protected page
-                setError(''); // Clear error message
-                navigate('/Homepage');
-
-            } else if (response.title === "Not Found") {
-                setError("No user exists with that email, please sign up!");
-            
-            } else if (response.title === "Unauthorized") {
-                setError("Incorrect password, please try again!");
-            }
-        }catch (error){
-            setError("A login error has occured");
+        const response = await login(email, password);
+        if (response.error) {
+            setError(response.error); // Display error from authService
+        } else {
+            localStorage.setItem("authToken", response.token);
+            localStorage.setItem("name", response.user.firstName);
+            localStorage.setItem("email", response.user.email);
+            setError('');
+            navigate('/Homepage');
         }
-
     }
+
 
     // The HTML/CSS for the login page
     return (

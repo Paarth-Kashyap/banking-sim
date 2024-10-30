@@ -1,29 +1,23 @@
-using System.ComponentModel.DataAnnotations; // For attributes like [Required], [Key], etc.
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore; // For attributes like [DatabaseGenerated]
 
 namespace BankingAppAPI.Models
 {
-    [Index(nameof(Account.AccountNumber), IsUnique = true)] // Ensures AccountNumber is unique (configure in DbContext for EF Core 6+)
     public class Account
     {
-        [Key] // Marks the Id as the primary key
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Auto-generates the Id upon insert
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        
-        [StringLength(20)] // Sets a max length for AccountNumber (optional, customize as needed)
-        public required string AccountNumber { get; set; }
+        [Required, StringLength(15, MinimumLength = 8)]
+        public string AccountNumber { get; set; } = string.Empty;
 
+        [Required, Range(0, double.MaxValue)]
+        public double Balance { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")] // Sets precision for Balance (18 total digits, 2 after decimal)
-        public required decimal Balance { get; set; }
+        [Required]
+        public int UserId { get; set; } // Foreign key
 
-        // Foreign key reference to User
-        [Required] // Ensures UserId cannot be null
-        [ForeignKey("User")] // Sets up foreign key relationship to User entity
-        public int UserId { get; set; }
-        
-        public required User User { get; set; }
+        public User User { get; set; } // Non-nullable navigation property
     }
 }

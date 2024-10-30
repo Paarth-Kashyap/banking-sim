@@ -14,27 +14,28 @@ namespace BankingAppAPI.Data
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
 
-        // Fluent API configuration for entity relationships and constraints
+        // API configuration for entity relationships
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            base.OnModelCreating(modelBuilder);
             //create users and transaction tables
             modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Account>().ToTable("Accounts");
             modelBuilder.Entity<Transaction>().ToTable("Transactions");
             
 
 
-            // Example: Unique constraint on AccountNumber
+            // Unique constraint on AccountNumber
             modelBuilder.Entity<Account>()
                 .HasIndex(a => a.AccountNumber)
                 .IsUnique();
 
-            // Example: Setting up foreign key relationship between User and Account
-            modelBuilder.Entity<Account>()
-                .HasOne(a => a.User) // Account has one User
-                .WithMany(u => u.Accounts) // User has many Accounts
-                .HasForeignKey(a => a.UserId) // Foreign key property in Account
-                .OnDelete(DeleteBehavior.Cascade); // Delete accounts if user is deleted
+            // Define one-to-many relationship between User and Account
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Accounts)
+                .WithOne(a => a.User)
+                .HasForeignKey(a => a.UserId)
+                .OnDelete(DeleteBehavior.Cascade); // Cascade delete accounts if user is deleted
         }
     }
 }

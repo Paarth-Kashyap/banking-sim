@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BankingAppAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+128e01fe64ef757e9958d6840ebfe497e737edc6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1574af85bc5ca404a3528849addb2d2555024e61")]
 [assembly: System.Reflection.AssemblyProductAttribute("BankingAppAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BankingAppAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

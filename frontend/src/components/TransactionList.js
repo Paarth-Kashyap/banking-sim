@@ -22,7 +22,7 @@ function TransactionList() {
             <div className="card-header">
                 <h5>Recent Transactions</h5>
             </div>
-            <ul className="list-group list-group-flush">
+            {/* <ul className="list-group list-group-flush">
                 {transactions.map((transaction, index) => (
                     <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                         <span>{transaction.date} - {transaction.description}</span>
@@ -31,7 +31,7 @@ function TransactionList() {
                         </span>
                     </li>
                 ))}
-            </ul>
+            </ul> */}
         </div>
     );
 }
